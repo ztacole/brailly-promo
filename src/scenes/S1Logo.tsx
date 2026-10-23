@@ -11,11 +11,7 @@ export const S1Logo: React.FC = () => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
 
-  const draw = spring({frame: f, fps, config: {damping: 200, mass: 0.9, stiffness: 70}});
-  const dots = interpolate(f, [16, 58], [0, 1], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-  });
+  const reveal = spring({frame: f, fps, config: {damping: 14, mass: 0.8, stiffness: 90}});
   const scale = interpolate(f, [0, S1_LEN], [0.97, 1.04]);
 
   return (
@@ -33,14 +29,14 @@ export const S1Logo: React.FC = () => {
             transform: `scale(${scale})`,
           }}
         >
-          <LogoLockup size={210} draw={draw} dots={dots} wordOpacity={fade(f, 34, 56)} light />
+          <LogoLockup size={200} reveal={reveal} wordOpacity={fade(f, 22, 44)} light />
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: 22,
-              opacity: fade(f, 58, 80),
-              transform: `translateY(${interpolate(f, [58, 80], [16, 0], {
+              opacity: fade(f, 46, 68),
+              transform: `translateY(${interpolate(f, [46, 68], [16, 0], {
                 extrapolateLeft: 'clamp',
                 extrapolateRight: 'clamp',
               })}px)`,
@@ -49,14 +45,13 @@ export const S1Logo: React.FC = () => {
             <div style={{width: 46, height: 3, background: 'rgba(255,255,255,0.35)'}} />
             <div
               style={{
-                fontSize: 30,
+                fontSize: 40,
                 fontWeight: 600,
-                letterSpacing: 9,
-                textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.86)',
+                letterSpacing: 1,
+                color: 'rgba(255,255,255,0.92)',
               }}
             >
-              Braille untuk semua
+              Setiap Karya Berhak Terbaca.
             </div>
             <div style={{width: 46, height: 3, background: 'rgba(255,255,255,0.35)'}} />
           </div>

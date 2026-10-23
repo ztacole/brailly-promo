@@ -52,22 +52,24 @@ export const S6Closing: React.FC = () => {
           }}
         >
           <div style={pop(f, fps, 0, 0.82)}>
-            <LogoLockup size={190} draw={1} dots={1} light />
+            <LogoLockup size={172} light />
           </div>
 
-          <div
-            style={{
-              fontSize: 46,
-              fontWeight: 700,
-              color: '#fff',
-              textAlign: 'center',
-              lineHeight: 1.3,
-              ...rise(f, fps, 22, 30),
-            }}
-          >
-            Agar karya penyandang tunanetra
-            <br />
-            <span style={{color: C.orange}}>bisa dibaca siapa saja.</span>
+          <div style={{textAlign: 'center', ...rise(f, fps, 22, 30)}}>
+            <div style={{fontSize: 60, fontWeight: 800, color: '#fff', lineHeight: 1.2}}>
+              Setiap Karya <span style={{color: C.orange}}>Berhak Terbaca.</span>
+            </div>
+            <div
+              style={{
+                marginTop: 18,
+                fontSize: 32,
+                fontWeight: 500,
+                color: 'rgba(255,255,255,0.8)',
+                ...rise(f, fps, 34, 24),
+              }}
+            >
+              Membuka akses, menghubungkan karya, merangkul kesetaraan.
+            </div>
           </div>
 
           <div style={{display: 'flex', gap: 22, marginTop: 14}}>

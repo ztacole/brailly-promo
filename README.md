@@ -7,8 +7,8 @@ instrumental, tanpa narasi.
 
 | File | Resolusi | Ukuran |
 |---|---|---|
-| [`out/brailly-promo.mp4`](out/brailly-promo.mp4) | 1920×1080 | 7,3 MB |
-| [`out/brailly-promo-720p.mp4`](out/brailly-promo-720p.mp4) | 1280×720 | 1,45 MB |
+| [`out/brailly-promo.mp4`](out/brailly-promo.mp4) | 1920×1080 | 7,8 MB |
+| [`out/brailly-promo-720p.mp4`](out/brailly-promo-720p.mp4) | 1280×720 | 1,5 MB |
 
 Buka salah satu file di atas lewat GitHub, lalu klik tombol **Download** (atau *View raw*).
 Pratinjau per scene ada di [`out/preview/`](out/preview).
@@ -17,12 +17,12 @@ Pratinjau per scene ada di [`out/preview/`](out/preview).
 
 | Waktu | Scene | Isi |
 |---|---|---|
-| 0:00–0:03.5 | Logo | Logo Brailly menggambar sendiri, tagline "Braille untuk semua" |
+| 0:00–0:03.5 | Logo | Logo resmi Brailly muncul + wordmark, slogan "Setiap Karya Berhak Terbaca." |
 | 0:03.5–0:08.5 | Hook | Halaman braille fisik + "Banyak karya lahir dari ujung jari. Tapi sedikit yang bisa membacanya." |
 | 0:08.5–0:20.5 | **Fitur Scan** | Home → tab Scan → viewfinder dengan garis pindai → shutter → hasil teks muncul diketik |
 | 0:20.5–0:32.5 | **Fitur Belajar** | Kamus huruf → Jalur Kuis 10 level → soal kuis dijawab benar, skor 2/5 → 3/5 |
 | 0:32.5–0:38 | Fitur Terjemah | Dua ponsel: teks→braille dan papan ketik 6 titik |
-| 0:38–0:45 | Closing | Logo + "Agar karya penyandang tunanetra bisa dibaca siapa saja." |
+| 0:38–0:45 | Closing | Logo + "Setiap Karya Berhak Terbaca." / "Membuka akses, menghubungkan karya, merangkul kesetaraan." |
 
 Fitur Scan dan Belajar masing-masing dapat porsi 12 detik — 24 dari 45 detik total, sesuai
 permintaan untuk menonjolkan kedua fitur itu.
@@ -85,9 +85,10 @@ di D mayor, 96 BPM, pad + marimba + melodi pentatonik. Intensitasnya naik mengik
 scene dan ada aksen bell tepat di tiap batas scene (0 / 3.5 / 8.5 / 20.5 / 32.5 / 38 detik).
 Karena dihasilkan sendiri, tidak ada masalah lisensi musik.
 
-**Logo adalah rekonstruksi SVG** (`src/ui/Logo.tsx`), bukan file PNG asli, supaya bisa dianimasikan
-(ring menggambar sendiri, titik braille menyala bertahap). Kalau ingin memakai file logo asli,
-letakkan di `public/logo.png` lalu ganti `<LogoMark />` dengan `<Img src={staticFile('logo.png')} />`.
+**Logo memakai file asli** `public/logo.png` (512×512), disalin dari
+`app/src/main/ic_launcher-playstore.png` di repo aplikasi `ztacole/brailly`. Latar logonya putih,
+jadi di scene gelap logo tampil sebagai ikon kotak putih bersudut bulat. Untuk mengganti logo,
+cukup timpa `public/logo.png` lalu render ulang.
 
 **Font**: Inter dimuat lewat `@remotion/google-fonts` dengan subset `latin`. Karakter di luar
 subset itu (misalnya `→` dan karakter CJK) tidak punya glyph, jadi ikon Terjemah dan tanda panah
@@ -97,7 +98,7 @@ digambar sebagai path SVG di `src/ui/icons.tsx`.
 
 Semua teks terkumpul untuk memudahkan revisi:
 
-- Braille untuk semua
+- Setiap Karya Berhak Terbaca.
 - Banyak karya lahir dari ujung jari.
 - Tapi **sedikit** yang bisa membacanya.
 - Brailly menjembatani keduanya.
@@ -109,7 +110,8 @@ Semua teks terkumpul untuk memudahkan revisi:
 - Kamus alfabet, angka, dan simbol / 10 level kuis, dari huruf sampai kata / Streak harian yang menjaga kebiasaan
 - Fitur 03 · Terjemah — Dua arah, **tanpa hambatan.**
 - Teks ke braille untuk menulis. Braille ke teks untuk membaca.
-- Agar karya penyandang tunanetra **bisa dibaca siapa saja.**
+- Setiap Karya **Berhak Terbaca.**
+- Membuka akses, menghubungkan karya, merangkul kesetaraan.
 - Scan · Terjemah · Belajar
 - Brailly · v1.0
 
