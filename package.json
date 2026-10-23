@@ -1,0 +1,32 @@
+{
+  "name": "brailly-promo",
+  "version": "1.0.0",
+  "description": "Video promosi aplikasi Brailly (45s, 1920x1080) dibangun dengan Remotion",
+  "private": true,
+  "scripts": {
+    "music": "node scripts/make-music.mjs public/music.wav",
+    "studio": "remotion studio src/index.ts",
+    "prerender": "npm run music",
+    "prestudio": "npm run music",
+    "render": "remotion render src/index.ts BraillyPromo out/brailly-promo.mp4 --codec=h264 --crf=18 --jpeg-quality=95 --concurrency=8",
+    "still": "remotion still src/index.ts BraillyPromo out/still.png --frame=700"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "dependencies": {
+    "@remotion/bundler": "^4.0.538",
+    "@remotion/cli": "^4.0.538",
+    "@remotion/google-fonts": "^4.0.538",
+    "@remotion/renderer": "^4.0.538",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.538"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

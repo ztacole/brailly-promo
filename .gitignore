@@ -1,0 +1,11 @@
+node_modules/
+
+# Trek musik dibuat ulang lewat `npm run music` (otomatis dijalankan sebelum render),
+# jadi WAV 8 MB-nya tidak perlu masuk repo.
+public/music.wav
+
+# File sementara hasil analisis audio
+check.wav
+*.log
+
+# Catatan: out/ TIDAK diabaikan. Video hasil render adalah deliverable utama repo ini.
