@@ -2,79 +2,100 @@ import React from 'react';
 import {interpolate, useCurrentFrame, useVideoConfig} from 'remotion';
 import {rise, sceneOpacity} from '../anim';
 import {C} from '../theme';
-import {BelajarScreen, JalurKuisScreen, QuizScreen} from '../screens/Belajar';
+import {
+  BelajarScreen,
+  JalurKuisScreen,
+  QuizScreen,
+  QuizVictoryScreen,
+  VideoMateriScreen,
+} from '../screens/Belajar';
 import {Phone, Tap} from '../ui/Phone';
 import {Bullet, Headline, Kicker, LightBg, ScreenLayer, Sub} from '../ui/stage';
 
-export const S4_LEN = 360;
+export const S4_LEN = 390;
 
 export const S4Belajar: React.FC = () => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
 
-  const letters = Math.max(0, Math.min(16, Math.floor((f - 34) / 4)));
-  const nodes = Math.max(0, Math.min(5, Math.floor((f - 152) / 8)));
-  const pulse = f > 196 && f < 236 ? ((f - 196) % 40) / 40 : 0;
+  // Pulse animation for the active level node
+  const levelPulse = f >= 100 && f <= 165 ? ((f - 100) % 30) / 30 : 0;
 
-  const cellsShown = Math.max(0, Math.min(4, Math.floor((f - 266) / 7)));
-  const answered = f >= 302;
-  const picked = f >= 296 ? 0 : null;
-  const progress = interpolate(f, [302, 322], [0.4, 0.6], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-  });
+  // Celebration particle burst when quiz answer is correct
+  const celebrate =
+    f >= 280
+      ? interpolate(f, [280, 310, 340], [0, 1, 0.6], {extrapolateRight: 'clamp'})
+      : 0;
 
   return (
     <div style={{position: 'absolute', inset: 0, opacity: sceneOpacity(f, S4_LEN)}}>
       <LightBg>
-        {/* device on the left this time, for rhythm */}
-        <div style={{position: 'absolute', left: 250, top: 108, ...rise(f, fps, 8, 70)}}>
-          <Phone scale={0.84}>
-            <ScreenLayer frame={f} inAt={[6, 18]} outAt={[144, 154]}>
-              <BelajarScreen letters={letters} />
+        {/* Device on left side for visual dynamic rhythm */}
+        <div style={{position: 'absolute', left: 210, top: 96, ...rise(f, fps, 8, 70)}}>
+          <Phone scale={0.85}>
+            {/* Step 1: Real Belajar Hub & Dictionary */}
+            <ScreenLayer frame={f} inAt={[0, 14]} outAt={[78, 88]}>
+              <BelajarScreen />
             </ScreenLayer>
-            <ScreenLayer frame={f} inAt={[150, 160]} outAt={[242, 252]}>
-              <JalurKuisScreen nodes={nodes} pulse={pulse} />
+
+            {/* Step 2: Real Level Progression Roadmap */}
+            <ScreenLayer frame={f} inAt={[84, 94]} outAt={[170, 180]}>
+              <JalurKuisScreen pulse={levelPulse} />
             </ScreenLayer>
-            <ScreenLayer frame={f} inAt={[248, 258]}>
-              <QuizScreen
-                cellsShown={cellsShown}
-                picked={picked}
-                correct={answered}
-                progress={progress}
-                score={answered ? '3/5' : '2/5'}
-                questionIndex="Soal 2 dari 5"
-              />
+
+            {/* Step 3: Real Video Learning Material */}
+            <ScreenLayer frame={f} inAt={[176, 186]} outAt={[250, 260]}>
+              <VideoMateriScreen />
             </ScreenLayer>
-            <Tap x={229} y={221} progress={(f - 112) / 20} />
-            <Tap x={159} y={603} progress={(f - 212) / 20} />
-            <Tap x={229} y={339} progress={(f - 288) / 20} />
+
+            {/* Step 4: Real Interactive Quiz with Correct State */}
+            <ScreenLayer frame={f} inAt={[256, 266]} outAt={[335, 345]}>
+              <QuizScreen celebrate={celebrate} />
+            </ScreenLayer>
+
+            {/* Step 5: Real Level Victory Celebration */}
+            <ScreenLayer frame={f} inAt={[340, 350]}>
+              <QuizVictoryScreen />
+            </ScreenLayer>
+
+            {/* Tap 1: Tap "LANJUTKAN KUIS" on main Belajar screen */}
+            <Tap x={229} y={225} progress={(f - 56) / 18} />
+
+            {/* Tap 2: Tap Level on roadmap */}
+            <Tap x={229} y={310} progress={(f - 146) / 18} />
+
+            {/* Tap 3: Tap "TONTON UNTUK MELANJUTKAN" on Video lesson */}
+            <Tap x={229} y={870} progress={(f - 226) / 18} />
+
+            {/* Tap 4: Tap "LANJUT" on Quiz Screen */}
+            <Tap x={229} y={837} progress={(f - 316) / 18} />
           </Phone>
         </div>
 
-        {/* copy column */}
-        <div style={{position: 'absolute', left: 800, top: 222, width: 1000}}>
+        {/* Copy Column on right side */}
+        <div style={{position: 'absolute', left: 810, top: 210, width: 980}}>
           <div style={rise(f, fps, 0, 30)}>
-            <Kicker>Fitur 02 · Belajar</Kicker>
+            <Kicker>Fitur 02 · Pembelajaran Braille</Kicker>
           </div>
-          <Headline style={{marginTop: 26, ...rise(f, fps, 6, 40)}}>
-            Belajar braille
+          <Headline style={{marginTop: 24, ...rise(f, fps, 6, 40)}}>
+            Belajar braille menyenangkan,
             <br />
             <span style={{color: C.orange}}>dari titik pertama.</span>
           </Headline>
-          <Sub style={{marginTop: 24, ...rise(f, fps, 14, 30)}}>
-            Kamus, kuis bertingkat, dan streak harian — semuanya dalam satu aplikasi.
+          <Sub style={{marginTop: 22, ...rise(f, fps, 14, 30)}}>
+            Mulai dari mengenal alfabet, menonton video panduan, hingga tantangan
+            kuis bertingkat yang interaktif.
           </Sub>
 
-          <div style={{marginTop: 42, display: 'flex', flexDirection: 'column', gap: 18}}>
-            <div style={rise(f, fps, 38, 30)}>
-              <Bullet dots={[1, 2, 3]}>Kamus alfabet, angka, dan simbol</Bullet>
+          <div style={{marginTop: 38, display: 'flex', flexDirection: 'column', gap: 16}}>
+            <div style={rise(f, fps, 34, 30)}>
+              <Bullet dots={[1, 2, 3]}>Kamus lengkap: Alfabet, Angka, & Simbol</Bullet>
             </div>
-            <div style={rise(f, fps, 168, 30)}>
-              <Bullet dots={[1, 4, 5]}>10 level kuis, dari huruf sampai kata</Bullet>
+            <div style={rise(f, fps, 140, 30)}>
+              <Bullet dots={[1, 4, 5]}>Materi video interaktif untuk setiap modul</Bullet>
             </div>
-            <div style={rise(f, fps, 276, 30)}>
-              <Bullet dots={[2, 3, 4, 6]}>Streak harian yang menjaga kebiasaan</Bullet>
+            <div style={rise(f, fps, 250, 30)}>
+              <Bullet dots={[2, 3, 4, 6]}>10 level kuis latihan & streak penjaga kebiasaan</Bullet>
             </div>
           </div>
         </div>

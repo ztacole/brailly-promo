@@ -2,33 +2,35 @@ import React from 'react';
 import {interpolate, useCurrentFrame, useVideoConfig} from 'remotion';
 import {fade, pop, rise, sceneOpacity} from '../anim';
 import {C} from '../theme';
-import {IconLearn, IconScan, IconTranslate} from '../ui/icons';
+import {IconCamera, IconLearn, IconTranslate} from '../ui/icons';
 import {LogoLockup} from '../ui/Logo';
 import {DarkBg} from '../ui/stage';
 
-export const S6_LEN = 210;
+export const S6_LEN = 180;
 
-const Chip: React.FC<{Icon: React.FC<any>; label: string; style?: React.CSSProperties}> = ({
-  Icon,
-  label,
-  style,
-}) => (
+const FeatureChip: React.FC<{
+  Icon: React.FC<any>;
+  label: string;
+  style?: React.CSSProperties;
+}> = ({Icon, label, style}) => (
   <div
     style={{
       display: 'flex',
       alignItems: 'center',
-      gap: 16,
-      padding: '18px 32px',
+      gap: 14,
+      padding: '16px 28px',
       borderRadius: 999,
       background: 'rgba(255,255,255,0.12)',
-      border: '1px solid rgba(255,255,255,0.2)',
-      fontSize: 30,
+      border: '1.5px solid rgba(255,255,255,0.22)',
+      boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
+      fontSize: 26,
       fontWeight: 600,
       color: '#fff',
+      backdropFilter: 'blur(10px)',
       ...style,
     }}
   >
-    <Icon size={30} color={C.orange} strokeWidth={2} />
+    <Icon size={28} color={C.orange} strokeWidth={2.2} />
     {label}
   </div>
 );
@@ -38,7 +40,7 @@ export const S6Closing: React.FC = () => {
   const {fps} = useVideoConfig();
 
   return (
-    <div style={{position: 'absolute', inset: 0, opacity: sceneOpacity(f, S6_LEN, 12)}}>
+    <div style={{position: 'absolute', inset: 0, opacity: sceneOpacity(f, S6_LEN, 10)}}>
       <DarkBg>
         <div
           style={{
@@ -48,57 +50,60 @@ export const S6Closing: React.FC = () => {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 40,
+            gap: 36,
           }}
         >
-          <div style={pop(f, fps, 0, 0.82)}>
-            <LogoLockup size={172} light />
+          <div style={pop(f, fps, 0, 0.85)}>
+            <LogoLockup size={180} light />
           </div>
 
-          <div style={{textAlign: 'center', ...rise(f, fps, 22, 30)}}>
-            <div style={{fontSize: 60, fontWeight: 800, color: '#fff', lineHeight: 1.2}}>
+          <div style={{textAlign: 'center', ...rise(f, fps, 18, 28)}}>
+            <div style={{fontSize: 58, fontWeight: 800, color: '#fff', lineHeight: 1.2}}>
               Setiap Karya <span style={{color: C.orange}}>Berhak Terbaca.</span>
             </div>
             <div
               style={{
-                marginTop: 18,
-                fontSize: 32,
+                marginTop: 16,
+                fontSize: 28,
                 fontWeight: 500,
-                color: 'rgba(255,255,255,0.8)',
-                ...rise(f, fps, 34, 24),
+                color: 'rgba(255,255,255,0.85)',
+                ...rise(f, fps, 28, 24),
               }}
             >
-              Membuka akses, menghubungkan karya, merangkul kesetaraan.
+              Mendukung pembelajaran braille, mempermudah penerjemahan untuk semua.
             </div>
           </div>
 
-          <div style={{display: 'flex', gap: 22, marginTop: 14}}>
-            <Chip Icon={IconScan} label="Scan" style={pop(f, fps, 44)} />
-            <Chip Icon={IconTranslate} label="Terjemah" style={pop(f, fps, 54)} />
-            <Chip Icon={IconLearn} label="Belajar" style={pop(f, fps, 64)} />
+          {/* Key 3 Features Highlighted */}
+          <div style={{display: 'flex', gap: 20, marginTop: 10}}>
+            <FeatureChip Icon={IconCamera} label="Scan Braille" style={pop(f, fps, 38)} />
+            <FeatureChip Icon={IconLearn} label="Belajar Interaktif" style={pop(f, fps, 48)} />
+            <FeatureChip Icon={IconTranslate} label="Terjemah 2 Arah" style={pop(f, fps, 58)} />
           </div>
 
           <div
             style={{
-              marginTop: 26,
-              fontSize: 26,
-              letterSpacing: 6,
+              marginTop: 18,
+              fontSize: 22,
+              fontWeight: 600,
+              letterSpacing: 4,
               textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.6)',
-              opacity: fade(f, 84, 108),
+              color: 'rgba(255,255,255,0.7)',
+              opacity: fade(f, 72, 94),
             }}
           >
-            Brailly · v1.0
+            Mulai Bersama Brailly
           </div>
         </div>
 
+        {/* Brand progress bar underline */}
         <div
           style={{
             position: 'absolute',
             left: 0,
             bottom: 0,
             height: 8,
-            width: `${interpolate(f, [0, S6_LEN], [40, 100], {
+            width: `${interpolate(f, [0, S6_LEN], [30, 100], {
               extrapolateRight: 'clamp',
             })}%`,
             background: `linear-gradient(90deg, ${C.orange}, ${C.blue})`,

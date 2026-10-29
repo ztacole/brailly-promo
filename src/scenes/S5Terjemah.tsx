@@ -1,54 +1,61 @@
 import React from 'react';
-import {interpolate, useCurrentFrame, useVideoConfig} from 'remotion';
+import {useCurrentFrame, useVideoConfig} from 'remotion';
 import {rise, sceneOpacity} from '../anim';
 import {C} from '../theme';
 import {TerjemahDotsScreen, TerjemahTextScreen} from '../screens/Terjemah';
-import {Phone} from '../ui/Phone';
+import {Phone, Tap} from '../ui/Phone';
 import {Headline, Kicker, LightBg, Sub} from '../ui/stage';
 
-export const S5_LEN = 165;
+export const S5_LEN = 150;
 
 export const S5Terjemah: React.FC = () => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
 
-  const typed = Math.floor(
-    interpolate(f, [26, 66], [0, 7], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})
-  );
-  const cells = Math.floor(
-    interpolate(f, [58, 104], [0, 7], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})
-  );
-  const pressed = f < 52 ? [] : f < 72 ? [1] : [1, 2];
-  const result = f < 86 ? '' : 'b';
-
   return (
     <div style={{position: 'absolute', inset: 0, opacity: sceneOpacity(f, S5_LEN)}}>
       <LightBg>
-        <div style={{position: 'absolute', left: 130, top: 330, width: 760}}>
+        {/* Copy Column */}
+        <div style={{position: 'absolute', left: 120, top: 290, width: 800}}>
           <div style={rise(f, fps, 0, 26)}>
-            <Kicker>Fitur 03 · Terjemah</Kicker>
+            <Kicker>Fitur 03 · Terjemah Dua Arah</Kicker>
           </div>
-          <Headline size={68} style={{marginTop: 26, ...rise(f, fps, 5, 36)}}>
-            Dua arah,
+          <Headline size={66} style={{marginTop: 24, ...rise(f, fps, 5, 36)}}>
+            Teks ke Braille,
             <br />
-            <span style={{color: C.orange}}>tanpa hambatan.</span>
+            <span style={{color: C.orange}}>Braille ke Teks.</span>
           </Headline>
-          <Sub style={{marginTop: 24, ...rise(f, fps, 12, 28)}}>
-            Teks ke braille untuk menulis. Braille ke teks untuk membaca.
+          <Sub style={{marginTop: 22, ...rise(f, fps, 12, 28)}}>
+            Ketik kata untuk melihat pola titik braille, atau tekan kombinasi 6 titik
+            untuk menerjemahkan ke teks biasa secara langsung.
           </Sub>
         </div>
 
-        <div style={{position: 'absolute', left: 1010, top: 250, ...rise(f, fps, 10, 70)}}>
-          <div style={{transform: 'rotate(-5deg)'}}>
-            <Phone scale={0.6}>
-              <TerjemahTextScreen typed={typed} cells={cells} />
+        {/* Dual Phone Showcase */}
+        <div style={{position: 'absolute', left: 980, top: 170, ...rise(f, fps, 10, 70)}}>
+          <div
+            style={{
+              transform: 'rotate(-4deg)',
+              filter: 'drop-shadow(0 20px 40px rgba(12,38,56,0.18))',
+            }}
+          >
+            <Phone scale={0.68}>
+              <TerjemahTextScreen />
             </Phone>
           </div>
         </div>
-        <div style={{position: 'absolute', left: 1390, top: 310, ...rise(f, fps, 20, 70)}}>
-          <div style={{transform: 'rotate(5deg)'}}>
-            <Phone scale={0.6}>
-              <TerjemahDotsScreen pressed={pressed} result={result} />
+
+        <div style={{position: 'absolute', left: 1400, top: 210, ...rise(f, fps, 20, 70)}}>
+          <div
+            style={{
+              transform: 'rotate(4deg)',
+              filter: 'drop-shadow(0 20px 40px rgba(12,38,56,0.18))',
+            }}
+          >
+            <Phone scale={0.68}>
+              <TerjemahDotsScreen />
+              {/* Interactive tap on dot 2 */}
+              <Tap x={140} y={430} progress={(f - 40) / 18} />
             </Phone>
           </div>
         </div>

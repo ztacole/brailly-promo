@@ -5,7 +5,7 @@ import {C} from '../theme';
 import {BraillePaper} from '../ui/kit';
 import {DarkBg, Headline} from '../ui/stage';
 
-export const S2_LEN = 150;
+export const S2_LEN = 135;
 
 export const S2Hook: React.FC = () => {
   const f = useCurrentFrame();
@@ -14,24 +14,24 @@ export const S2Hook: React.FC = () => {
   return (
     <div style={{position: 'absolute', inset: 0, opacity: sceneOpacity(f, S2_LEN)}}>
       <DarkBg>
-        {/* photographed braille page */}
+        {/* Photographed braille page with physical dots */}
         <div
           style={{
             position: 'absolute',
-            left: 120,
-            top: 300,
-            ...rise(f, fps, 2, 60),
+            left: 130,
+            top: 290,
+            ...rise(f, fps, 2, 50),
           }}
         >
           <div
             style={{
-              transform: `rotate(-6deg) translateY(${Math.sin(f / 46) * 9}px)`,
+              transform: `rotate(-5deg) translateY(${Math.sin(f / 46) * 8}px)`,
               boxShadow: '0 50px 90px rgba(0,0,0,0.45)',
               borderRadius: 26,
             }}
           >
             <BraillePaper
-              width={660}
+              width={640}
               height={470}
               radius={26}
               dot={11}
@@ -41,49 +41,49 @@ export const S2Hook: React.FC = () => {
           </div>
         </div>
 
-        {/* copy */}
+        {/* Copy Column */}
         <div
           style={{
             position: 'absolute',
-            left: 930,
-            top: 300,
-            width: 860,
+            left: 880,
+            top: 280,
+            width: 920,
             display: 'flex',
             flexDirection: 'column',
-            gap: 34,
+            gap: 32,
           }}
         >
-          <Headline light size={66} style={{...rise(f, fps, 12, 36)}}>
-            Banyak karya lahir
+          <Headline light size={64} style={{...rise(f, fps, 10, 36)}}>
+            Banyak karya indah lahir
             <br />
-            dari ujung jari.
+            dari <span style={{color: C.orange}}>ujung jari</span> tunanetra.
           </Headline>
-          <Headline light size={66} style={{...rise(f, fps, 42, 36)}}>
-            Tapi <span style={{color: C.orange}}>sedikit</span> yang
+          <Headline light size={60} style={{...rise(f, fps, 38, 36), opacity: 0.9}}>
+            Namun sulit dibaca oleh
             <br />
-            bisa membacanya.
+            masyarakat umum.
           </Headline>
           <div
             style={{
-              marginTop: 16,
+              marginTop: 12,
               display: 'flex',
               alignItems: 'center',
-              gap: 22,
-              opacity: fade(f, 84, 106),
+              gap: 20,
+              opacity: fade(f, 74, 96),
             }}
           >
             <div
               style={{
-                width: 92,
+                width: 76,
                 height: 6,
                 borderRadius: 4,
                 background: C.orange,
-                transform: `scaleX(${fade(f, 84, 106)})`,
+                transform: `scaleX(${fade(f, 74, 96)})`,
                 transformOrigin: 'left center',
               }}
             />
-            <div style={{fontSize: 38, fontWeight: 700, color: '#fff'}}>
-              Brailly menjembatani keduanya.
+            <div style={{fontSize: 36, fontWeight: 700, color: '#fff'}}>
+              Brailly hadir membuka akses untuk semua.
             </div>
           </div>
         </div>

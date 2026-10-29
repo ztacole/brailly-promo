@@ -1,111 +1,94 @@
 import React from 'react';
 import {C} from '../theme';
-import {Card, PrimaryButton, ScreenTitle, BraillePaper} from '../ui/kit';
-import {IconCamera} from '../ui/icons';
-import {Screen} from '../ui/Phone';
+import {AppScreen} from '../ui/AppScreen';
 
-/** Scan tab with a live viewfinder. `sweep` (0..1) drives the scanning line. */
+/**
+ * Authentic Scan Camera screen from the Brailly app, with an interactive
+ * laser sweep line and shutter flash.
+ */
 export const ScanCameraScreen: React.FC<{sweep?: number; flash?: number}> = ({
   sweep = 0,
   flash = 0,
-}) => (
-  <Screen active="scan" time="9:44" recording>
-    <ScreenTitle title="Scan Braille" sub="Arahkan kamera ke teks braille fisik" />
-    <div style={{marginTop: 16, position: 'relative'}}>
-      <BraillePaper width={415} height={360} radius={18} tilt={-0.6} />
-      {/* framing brackets */}
-      <div style={{position: 'absolute', inset: 0}}>
-        {[
-          {top: 18, left: 18, borderTop: 1, borderLeft: 1},
-          {top: 18, right: 18, borderTop: 1, borderRight: 1},
-          {bottom: 18, left: 18, borderBottom: 1, borderLeft: 1},
-          {bottom: 18, right: 18, borderBottom: 1, borderRight: 1},
-        ].map((p, i) => (
-          <div
-            key={i}
-            style={{
-              position: 'absolute',
-              width: 36,
-              height: 36,
-              top: p.top,
-              left: p.left,
-              right: p.right,
-              bottom: p.bottom,
-              borderTop: p.borderTop ? '3px solid rgba(255,255,255,0.92)' : undefined,
-              borderLeft: p.borderLeft ? '3px solid rgba(255,255,255,0.92)' : undefined,
-              borderRight: p.borderRight ? '3px solid rgba(255,255,255,0.92)' : undefined,
-              borderBottom: p.borderBottom ? '3px solid rgba(255,255,255,0.92)' : undefined,
-              borderRadius: 6,
-            }}
-          />
-        ))}
-      </div>
-      {/* scanning line */}
+}) => {
+  // Viewfinder bounding in phone coordinates:
+  // Top ~ 160px, bottom ~ 580px, left ~ 32px, right ~ 32px
+  const laserY = 175 + sweep * 380;
+
+  return (
+    <AppScreen name="scan_camera.png">
+      {/* Dynamic Laser Scanning Line */}
       <div
         style={{
           position: 'absolute',
-          left: 10,
-          right: 10,
-          top: 20 + sweep * 300,
+          left: 36,
+          right: 36,
+          top: laserY,
           height: 3,
           borderRadius: 3,
           background: C.orange,
-          boxShadow: `0 0 22px 6px rgba(232,135,58,0.55)`,
-          opacity: 0.95,
+          boxShadow: `0 0 18px 5px rgba(232, 135, 58, 0.75), 0 0 6px 2px #fff`,
+          pointerEvents: 'none',
+          opacity: sweep > 0 ? 0.95 : 0,
         }}
       />
-      {/* shutter flash */}
+
+      {/* Focus / Detection Reticle Pulse */}
       <div
         style={{
           position: 'absolute',
-          inset: 0,
-          borderRadius: 18,
-          background: '#fff',
-          opacity: flash,
+          left: 50,
+          top: 200,
+          right: 50,
+          height: 330,
+          borderRadius: 16,
+          border: '1.5px dashed rgba(232, 135, 58, 0.35)',
+          pointerEvents: 'none',
         }}
       />
-    </div>
-    <PrimaryButton style={{marginTop: 18}}>
-      <IconCamera size={20} color="#fff" strokeWidth={1.9} />
-      Ambil Gambar
-    </PrimaryButton>
-  </Screen>
-);
 
-/** Result card. `chars` types the recognised text in; `confidence` counts up. */
-export const ScanResultScreen: React.FC<{chars?: number; confidence?: number}> = ({
-  chars = 999,
-  confidence = 86,
-}) => {
-  const text = 'One joy dispels a hundred cares. (orientalwisdom)';
-  const shown = text.slice(0, chars);
-  return (
-    <Screen active="scan" time="9:45">
-      <ScreenTitle title="Scan Braille" sub="Arahkan kamera ke teks braille fisik" />
-      <Card style={{marginTop: 16, padding: 18}}>
-        <div style={{fontSize: 18, fontWeight: 700, color: C.ink}}>Hasil Scan</div>
+      {/* Camera Shutter Flash */}
+      {flash > 0 && (
         <div
           style={{
-            fontSize: 17,
-            color: C.ink,
-            lineHeight: 1.45,
-            marginTop: 8,
-            minHeight: 50,
+            position: 'absolute',
+            inset: 0,
+            backgroundColor: '#ffffff',
+            opacity: flash,
+            pointerEvents: 'none',
           }}
-        >
-          {shown}
-          {chars < text.length ? (
-            <span style={{color: C.orange, fontWeight: 700}}>|</span>
-          ) : null}
-        </div>
-        <div style={{fontSize: 12.5, color: C.inkSoft, marginTop: 10}}>
-          Keyakinan deteksi: {Math.round(confidence)}% · 45 sel · 1 paragraf
-        </div>
-      </Card>
-      <PrimaryButton outline style={{marginTop: 16}}>
-        <IconCamera size={20} color={C.blue} strokeWidth={1.9} />
-        Scan Lagi
-      </PrimaryButton>
-    </Screen>
+        />
+      )}
+    </AppScreen>
   );
+};
+
+/**
+ * Authentic Scan Result screen from the Brailly app.
+ */
+export const ScanResultScreen: React.FC<{reveal?: number}> = ({reveal = 1}) => {
+  return (
+    <AppScreen name="scan_result.png">
+      {/* Subtle pulse highlight over translated card */}
+      <div
+        style={{
+          position: 'absolute',
+          left: 20,
+          top: 155,
+          right: 20,
+          height: 180,
+          borderRadius: 20,
+          border: `2px solid rgba(44, 108, 153, ${0.4 * reveal})`,
+          boxShadow: `0 0 20px rgba(44, 108, 153, ${0.2 * reveal})`,
+          pointerEvents: 'none',
+        }}
+      />
+    </AppScreen>
+  );
+};
+
+/**
+ * Authentic Scan History screen from the Brailly app.
+ */
+export const ScanHistoryScreen: React.FC = () => {
+  return <AppScreen name="scan_history.png" />;
 };

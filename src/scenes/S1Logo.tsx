@@ -25,38 +25,57 @@ export const S1Logo: React.FC = () => {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 44,
+            gap: 36,
             transform: `scale(${scale})`,
           }}
         >
-          <LogoLockup size={200} reveal={reveal} wordOpacity={fade(f, 22, 44)} light />
+          <LogoLockup size={210} reveal={reveal} wordOpacity={fade(f, 20, 42)} light />
+
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: 22,
-              opacity: fade(f, 46, 68),
-              transform: `translateY(${interpolate(f, [46, 68], [16, 0], {
+              opacity: fade(f, 44, 66),
+              transform: `translateY(${interpolate(f, [44, 66], [16, 0], {
                 extrapolateLeft: 'clamp',
                 extrapolateRight: 'clamp',
               })}px)`,
             }}
           >
-            <div style={{width: 46, height: 3, background: 'rgba(255,255,255,0.35)'}} />
+            <div style={{width: 48, height: 3, background: C.orange, borderRadius: 2}} />
             <div
               style={{
-                fontSize: 40,
-                fontWeight: 600,
-                letterSpacing: 1,
-                color: 'rgba(255,255,255,0.92)',
+                fontSize: 42,
+                fontWeight: 700,
+                letterSpacing: 0.5,
+                color: 'rgba(255,255,255,0.95)',
               }}
             >
               Setiap Karya Berhak Terbaca.
             </div>
-            <div style={{width: 46, height: 3, background: 'rgba(255,255,255,0.35)'}} />
+            <div style={{width: 48, height: 3, background: C.orange, borderRadius: 2}} />
+          </div>
+
+          <div
+            style={{
+              opacity: fade(f, 62, 80),
+              transform: `translateY(${interpolate(f, [62, 80], [12, 0], {
+                extrapolateLeft: 'clamp',
+                extrapolateRight: 'clamp',
+              })}px)`,
+              fontSize: 22,
+              fontWeight: 500,
+              color: 'rgba(255,255,255,0.7)',
+              letterSpacing: 2,
+              textTransform: 'uppercase',
+            }}
+          >
+            Belajar & Terjemahkan Braille Lebih Mudah
           </div>
         </div>
-        {/* bottom accent */}
+
+        {/* Bottom brand accent */}
         <div
           style={{
             position: 'absolute',
